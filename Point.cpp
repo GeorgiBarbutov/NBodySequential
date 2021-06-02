@@ -1,44 +1,79 @@
 #include "point.h"   
 #include <iostream>
 
-Point::Point() {
+Point::Point() 
+{
 	this->x = 0.0;
 	this->y = 0.0;
-	this->mass = 0.0;
 }
 
-Point::Point(double x, double y, double mass) {
+Point::Point(double x, double y)
+{
 	this->x = x;
 	this->y = y;
-	this->mass = mass;
 }
 
-Point::Point(double x, double y) {
-	this->x = x;
-	this->y = y;
-	this->mass = 0.0;
-}
-
-double Point::getX() {
+double Point::getX() 
+{
 	return this->x;
 }
-
-double Point::getY() {
+double Point::getY() 
+{
 	return this->y;
 }
-
-double Point::getMass() {
-	return this->mass;
-}
-
-void Point::setX(double x) {
+void Point::setX(double x) 
+{
 	this->x = x;
 }
-
-void Point::setY(double y) {
+void Point::setY(double y) 
+{
+	this->y = y;
+}
+void Point::set(double x, double y)
+{
+	this->x = x;
 	this->y = y;
 }
 
-void Point::setMass(double mass) {
-	this->mass = mass;
+double Point::length()
+{
+	Point empty = Point();
+	return this->distance(empty);
+}
+
+double Point::distance(Point& point)
+{
+	return sqrt((this->x - point.getX()) * (this->x - point.getX()) + (this->y - point.getY()) * (this->y - point.getY()));
+}
+
+void Point::normalize()
+{
+	double lengthOf = this->length();
+	this->x /= lengthOf;
+	this->y /= lengthOf;
+}
+
+bool Point::operator==(const Point& point)
+{
+	return this->x == point.x && this->y == point.y;
+}
+
+Point Point::operator+(const Point& point)
+{
+	return Point(this->x + point.x, this->y + point.y);
+}
+
+Point Point::operator-(const Point& point)
+{
+	return Point(this->x - point.x, this->y - point.y);
+}
+
+Point Point::operator*(double coeficient)
+{
+	return Point(this->x * coeficient, this->y * coeficient);
+}
+
+Point Point::operator/(double coeficient)
+{
+	return Point(this->x / coeficient, this->y / coeficient);
 }

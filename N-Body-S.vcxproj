@@ -151,11 +151,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Body.cpp" />
     <ClCompile Include="N-Body-S.cpp" />
     <ClCompile Include="Node.cpp" />
     <ClCompile Include="Point.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Body.h" />
     <ClInclude Include="N-Body-S.h" />
     <ClInclude Include="Node.h" />
     <ClInclude Include="Point.h" />

@@ -1,172 +1,209 @@
 #include "node.h"   
 #include <iostream>
+#include "Body.h"
 
 using namespace::std;
 
-Node::Node() {
+Node::Node() 
+{
 	this->isRoot = false;
 	this->isExternal = true;
-	this->NW = NULL;
-	this->NE = NULL;
-	this->SW = NULL;
-	this->SE = NULL;
-	this->existingPoint = NULL;
+	this->NW = nullptr;
+	this->NE = nullptr;
+	this->SW = nullptr;
+	this->SE = nullptr;
 	this->minX = 0.0;
 	this->minY = 0.0;
 	this->maxX = 0.0;
 	this->maxY = 0.0;
 	this->totalMass = 0.0;
-	this->centerX = 0.0;
-	this->centerY = 0.0;
-	this->centerMassX = 0.0;
-	this->centerMassY = 0.0;
-	this->pointCount = 0;
+	this->center = Point(0, 0);
+	this->centerMass = Point(0, 0);
+	this->bodyCount = 0;
 }
-Node::Node(double minX, double minY, double maxX, double maxY, bool isRoot) {
+Node::Node(double minX, double minY, double maxX, double maxY, bool isRoot) 
+{
 	this->isRoot = isRoot;
 	this->isExternal = true;
-	this->NW = NULL;
-	this->NE = NULL;
-	this->SW = NULL;
-	this->SE = NULL;
-	this->existingPoint = NULL;
+	this->NW = nullptr;
+	this->NE = nullptr;
+	this->SW = nullptr;
+	this->SE = nullptr;
 	this->minX = minX;
 	this->minY = minY;
 	this->maxX = maxX;
 	this->maxY = maxY;
 	this->totalMass = 0.0;
-	this->centerX = (this->maxX + this->minX) / 2;
-	this->centerY = (this->maxY + this->minY) / 2;
-	this->centerMassX = 0.0;
-	this->centerMassY = 0.0;
-	this->pointCount = 0;
+	this->center = Point((this->maxX + this->minX) / 2, (this->maxY + this->minY) / 2);
+	this->centerMass = Point(0, 0);
+	this->bodyCount = 0;
 }
 
-double Node::getMinX() {
+Node::~Node()
+{
+	delete NW;
+	delete NE;
+	delete SW;
+	delete SE;
+}
+
+double Node::getMinX()
+{
 	return this->minX;
 }
-double Node::getMinY() {
+double Node::getMinY() 
+{
 	return this->minY;
 }
-double Node::getMaxX() {
+double Node::getMaxX() 
+{
 	return this->maxX;
 }
-double Node::getMaxY() {
+double Node::getMaxY()
+{
 	return this->maxY;
 }
-double Node::getTotalMass() {
+double Node::getTotalMass()
+{
 	return this->totalMass;
 }
-double Node::getCenterX() {
-	return this->centerX;
+Point Node::getCenter()
+{
+	return this->center;
 }
-double Node::getCenterY() {
-	return this->centerY;
+Point Node::getCenterMass()
+{
+	return this->centerMass;
 }
-double Node::getCenterMassX() {
-	return this->centerMassX;
+int Node::getBodyCount()
+{
+	return this->bodyCount;
 }
-double Node::getCenterMassY() {
-	return this->centerMassY;
-}
-int Node::getPointCount(){
-	return this->pointCount;
-}
-Node* Node::getNW() {
+Node* Node::getNW()
+{
 	return this->NW;
 }
-Node* Node::getNE() {
+Node* Node::getNE()
+{
 	return this->NE;
 }
-Node* Node::getSW() {
+Node* Node::getSW()
+{
 	return this->SW;
 }
-Node* Node::getSE() {
+Node* Node::getSE()
+{
 	return this->SE;
 }
-Point* Node::getExistingPoint() {
-	return this->existingPoint;
+Body Node::getExistingBody()
+{
+	return this->existingBody;
 }
-bool Node::getIsRoot() {
+bool Node::getIsRoot()
+{
 	return this->isRoot;
 }
-bool Node::getIsExternal() {
+bool Node::getIsExternal()
+{
 	return this->isExternal;
 }
-void Node::setMinX(double minX) {
+void Node::setMinX(double minX)
+{
 	this->minX = minX;
 }
-void Node::setMinY(double minY) {
+void Node::setMinY(double minY)
+{
 	this->minY = minY;
 }
-void Node::setMaxX(double maxX) {
+void Node::setMaxX(double maxX)
+{
 	this->maxX = maxX;
 }
-void Node::setMaxY(double maxY) {
+void Node::setMaxY(double maxY)
+{
 	this->maxY = maxY;
 }
-void Node::setTotalMass(double totalMass) {
+void Node::setTotalMass(double totalMass)
+{
 	this->totalMass = totalMass;
 }
-void Node::setCenterX(double centerX) {
-	this->centerX = centerX;
+void Node::setCenter(Point& center)
+{
+	this->center = center;
 }
-void Node::setCenterY(double centerY) {
-	this->centerY = centerY;
+void Node::setCenterMass(Point& centerMass)
+{
+	this->centerMass = centerMass;
 }
-void Node::setCenterMassX(double centerMassX) {
-	this->centerMassX = centerMassX;
+void Node::setBodyCount(int bodyCount)
+{
+	this->bodyCount = bodyCount;
 }
-void Node::setCenterMassY(double centerMassY) {
-	this->centerMassY = centerMassY;
-}
-void Node::setPointCount(int pointCount) {
-	this->pointCount = pointCount;
-}
-void Node::setNW(Node* NW) {
+void Node::setNW(Node* NW)
+{
 	this->NW = NW;
 }
-void Node::setNE(Node* NE) {
+void Node::setNE(Node* NE)
+{
 	this->NE = NE;
 }
-void Node::setSW(Node* SW) {
+void Node::setSW(Node* SW)
+{
 	this->SW = SW;
 }
-void Node::setSE(Node* SE) {
+void Node::setSE(Node* SE)
+{
 	this->SE = SE;
 }
-void Node::setExistingPoint(Point* point) {
-	this->existingPoint = point;
+void Node::setExistingBody(Body& body)
+{
+	this->existingBody = body;
 }
-void Node::setIsRoot(bool isRoot) {
-	this->isRoot= isRoot;
+void Node::setIsRoot(bool isRoot)
+{
+	this->isRoot = isRoot;
 }
-void Node::setIsExternal(bool isExternal) {
-	this->isExternal= isExternal;
+void Node::setIsExternal(bool isExternal)
+{
+	this->isExternal = isExternal;
 }
 
-Node* Node::getQuadrant(Point* point) {
-	if (point->getX() > this->minX && point->getX() < centerX && point->getY() > this->minY && point->getY() < centerY) {
-		if (NW == NULL) {
-			NW = new Node(this->minX, this->minY, centerX, centerY);
+Node* Node::getQuadrant(Body& body)
+{
+	double bx = body.getPoint().getX();
+	double by = body.getPoint().getY();
+	double cx = this->center.getX();
+	double cy = this->center.getY();
+
+	if (bx < cx && by > cy)
+	{
+		if (NW == NULL)
+		{
+			NW = new Node(this->minX, cy, cx, this->maxY);
 		}
 		return NW;
 	}
-	else if (point->getX() > this->minX && point->getX() > centerX && point->getY() > this->minY && point->getY() < centerY) {
-		if (NE == NULL) {
-			NE = new Node(centerX, this->minY, this->maxX, centerY);
+	else if (bx > cx && by > cy)
+	{
+		if (NE == NULL)
+		{
+			NE = new Node(cx, cy, this->maxX, this->maxY);
 		}
 		return NE;
 	}
-	else if (point->getX() > this->minX && point->getX() < centerX && point->getY() > this->minY && point->getY() > centerY) {
-		if (SW == NULL) {
-			SW = new Node(this->minX, centerY, centerX, this->maxY);
+	else if (bx < cx && by < cy)
+	{
+		if (SW == NULL)
+		{
+			SW = new Node(this->minX, this->minY, cx, cy);
 		}
 		return SW;
 	}
-	else if (point->getX() > this->minX && point->getX() > centerX && point->getY() > this->minY && point->getY() > centerY) {
-		if (SE == NULL) {
-			SE = new Node(centerX, centerY, this->maxX, this->maxY);
+	else if (bx > cx && by < cy)
+	{
+		if (SE == NULL)
+		{
+			SE = new Node(cx, this->minY, this->maxX, cy);
 		}
 		return SE;
 	}
@@ -174,81 +211,115 @@ Node* Node::getQuadrant(Point* point) {
 	return NULL;
 }
 
-void Node::insert(Point* point) {
-	if (this->pointCount > 1) {
-		Node* quadrant = getQuadrant(point);
-		quadrant->insert(point);
+void Node::insert(Body& body)
+{
+	if (this->bodyCount > 1)
+	{
+		Node* quadrant = getQuadrant(body);
+		quadrant->insert(body);
 	}
-	else if (this->pointCount == 1) {
-		Node* quadrant = getQuadrant(this->existingPoint);
-		quadrant->insert(this->existingPoint);
-		Node* quadrant2 = getQuadrant(point);
-		quadrant2->insert(point);
+	else if (this->bodyCount == 1)
+	{
+		Node* quadrant = getQuadrant(this->existingBody);
+		quadrant->insert(this->existingBody);
+		Node* quadrant2 = getQuadrant(body);
+		quadrant2->insert(body);
 
 		this->isExternal = false;
-	} else {
-		setExistingPoint(point);
+	}
+	else
+	{
+		setExistingBody(body);
 	}
 
-	this->pointCount++;
+	this->bodyCount++;
 }
 
-void Node::addMassAndCenterMass(Node* quadrant) {
-	if (quadrant != NULL) {
+void Node::addMassAndCenterMass(Node* quadrant)
+{
+	if (quadrant != nullptr)
+	{
 		quadrant->calculateMassDistribution();
 		this->totalMass += quadrant->getTotalMass();
-		this->centerMassX += quadrant->getCenterMassX() * quadrant->getTotalMass();
-		this->centerMassY += quadrant->getCenterMassY() * quadrant->getTotalMass();
+		this->centerMass = this->centerMass + (quadrant->getCenterMass() * quadrant->getTotalMass());
 	}
 }
 
-void Node::calculateMassDistribution() {
-	if (this->pointCount == 1) {
-		this->totalMass = this->existingPoint->getMass();
-		this->centerMassX = this->existingPoint->getX();
-		this->centerMassY = this->existingPoint->getY();
+void Node::calculateMassDistribution()
+{
+	if (this->isExternal)
+	{
+		this->totalMass = this->existingBody.getMass();
+		this->centerMass.set(this->existingBody.getPoint().getX(), this->existingBody.getPoint().getY());
 	}
-	else {
+	else
+	{
 		this->totalMass = 0;
-		this->centerMassX = 0;
-		this->centerMassY = 0;
+		this->centerMass.set(0, 0);
 
 		addMassAndCenterMass(NW);
 		addMassAndCenterMass(NE);
 		addMassAndCenterMass(SW);
 		addMassAndCenterMass(SE);
 
-		this->centerMassX /= this->totalMass;
-		this->centerMassY /= this->totalMass;
+		this->centerMass = this->centerMass / this->totalMass;
 	}
 }
 
-Point* Node::appliedForce(Point* targetPoint, Point* influencePoint)
+Point Node::appliedForce(Body& target, Point& influence, double influenceMass, double G)
 {
-	Point* force = new Point(0, 0);
+	Point direction = influence - target.getPoint();
+	double r = direction.length();
+	direction.normalize();
 
-	if (targetPoint == influencePoint)
-		return force;
-
-	double x1 = targetPoint->getX();
-	double x2 = influencePoint->getX();
-	double y1 = targetPoint->getY();
-	double y2 = influencePoint->getY();
-	double m1 = targetPoint->getMass();
-	double m2 = influencePoint->getMass();
-
-	double r = sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
-	if (r > 0)
+	Point force = Point();
+	if (target.getPoint() == influence)
 	{
-		double k = (m1 * m2) / (r * r * r);
+		return force;
+	}
 
-		force->setX(force->getX() + k * (x2 - x1));
-		force->setY(force->getY() + k * (y2 - y1));
+	double F = G * target.getMass() * influenceMass / (r * r);
+	force = direction * F + force;
+
+	return force;
+}
+
+Point Node::getChildAppliedForce(Node* quadrant, Body& target, double theta, double G)
+{
+	Point force = Point();
+
+	if (quadrant != nullptr)
+	{
+		force = quadrant->calculateForce(target, theta, G);
+	}
+
+	return force;
+}
+
+Point Node::calculateForce(Body& target, double theta, double G)
+{
+	Point force = Point();
+
+	//size of quadrant
+	double d = this->maxX - this->minX;
+	//targetPoint distance from center of mass
+	double r = target.getPoint().distance(this->centerMass);
+
+	if (this->isExternal)
+	{
+		Point existingBodyPoint = this->existingBody.getPoint();
+		force = appliedForce(target, existingBodyPoint, this->existingBody.getMass(), G);
+	}
+	else if (d / r <= theta)
+	{
+		force = appliedForce(target, this->centerMass, this->totalMass, G);
 	}
 	else
 	{
-		force->setX(0);
-		force->setY(0);
+		force = force + getChildAppliedForce(this->NW, target, theta, G);
+		force = force + getChildAppliedForce(this->NE, target, theta, G);
+		force = force + getChildAppliedForce(this->SW, target, theta, G);
+		force = force + getChildAppliedForce(this->SE, target, theta, G);
 	}
 
 	return force;
