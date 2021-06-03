@@ -54,7 +54,7 @@ public:
 	void setMaxY(double maxY);
 	void setTotalMass(double totalMass);
 	void setCenter(Point& center);
-	void setCenterMass(Point& centerMass);
+	void setCenterMass(Point centerMass);
 	void setBodyCount(int bodyCount);
 	void setNW(Node* NW);
 	void setNE(Node* NE);
@@ -67,6 +67,7 @@ public:
 	void insert(Body& point);
 	void calculateMassDistribution();
 	Point calculateForce(Body& targetBody, double theta, double G);
+	bool isBodyInside(Body& body);
 };
 
 #endif

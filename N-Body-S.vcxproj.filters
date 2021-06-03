@@ -27,6 +27,12 @@
     <ClCompile Include="Body.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="BarnesHutSequential.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BarnesHutParallel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="N-Body-S.h">
@@ -39,6 +45,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Body.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BarnesHutSequential.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BarnesHutParallel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -131,7 +131,7 @@ void Node::setCenter(Point& center)
 {
 	this->center = center;
 }
-void Node::setCenterMass(Point& centerMass)
+void Node::setCenterMass(Point centerMass)
 {
 	this->centerMass = centerMass;
 }
@@ -168,6 +168,7 @@ void Node::setIsExternal(bool isExternal)
 	this->isExternal = isExternal;
 }
 
+//return the quadrant in which the body is found
 Node* Node::getQuadrant(Body& body)
 {
 	double bx = body.getPoint().getX();
@@ -175,7 +176,7 @@ Node* Node::getQuadrant(Body& body)
 	double cx = this->center.getX();
 	double cy = this->center.getY();
 
-	if (bx < cx && by > cy)
+	if (bx < cx && by >= cy)
 	{
 		if (NW == NULL)
 		{
@@ -183,7 +184,7 @@ Node* Node::getQuadrant(Body& body)
 		}
 		return NW;
 	}
-	else if (bx > cx && by > cy)
+	else if (bx >= cx && by >= cy)
 	{
 		if (NE == NULL)
 		{
@@ -199,7 +200,7 @@ Node* Node::getQuadrant(Body& body)
 		}
 		return SW;
 	}
-	else if (bx > cx && by < cy)
+	else if (bx >= cx && by < cy)
 	{
 		if (SE == NULL)
 		{
@@ -211,6 +212,7 @@ Node* Node::getQuadrant(Body& body)
 	return NULL;
 }
 
+//insert a new body in the quadtree
 void Node::insert(Body& body)
 {
 	if (this->bodyCount > 1)
@@ -245,6 +247,7 @@ void Node::addMassAndCenterMass(Node* quadrant)
 	}
 }
 
+//calculate mass and center of mass recursively
 void Node::calculateMassDistribution()
 {
 	if (this->isExternal)
@@ -266,6 +269,7 @@ void Node::calculateMassDistribution()
 	}
 }
 
+//calculate force exerted from influence to target
 Point Node::appliedForce(Body& target, Point& influence, double influenceMass, double G)
 {
 	Point direction = influence - target.getPoint();
@@ -296,6 +300,7 @@ Point Node::getChildAppliedForce(Node* quadrant, Body& target, double theta, dou
 	return force;
 }
 
+//calculates force from all bodies to target recursively over the quadtree
 Point Node::calculateForce(Body& target, double theta, double G)
 {
 	Point force = Point();
@@ -310,7 +315,7 @@ Point Node::calculateForce(Body& target, double theta, double G)
 		Point existingBodyPoint = this->existingBody.getPoint();
 		force = appliedForce(target, existingBodyPoint, this->existingBody.getMass(), G);
 	}
-	else if (d / r <= theta)
+	else if (d / r <= theta) // calculate force of all bodies in an internal as a single body
 	{
 		force = appliedForce(target, this->centerMass, this->totalMass, G);
 	}
@@ -323,4 +328,9 @@ Point Node::calculateForce(Body& target, double theta, double G)
 	}
 
 	return force;
+}
+
+bool Node::isBodyInside(Body& body) {
+	return body.getPoint().getX() >= this->minX && body.getPoint().getX() < this->maxX 
+		&& body.getPoint().getY() >= this->minY && body.getPoint().getY() < this->maxY;
 }

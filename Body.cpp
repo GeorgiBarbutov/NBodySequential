@@ -46,8 +46,7 @@ void Body::setMass(double mass)
 
 void Body::updateVelocity(double dt, Point& force)
 {
-	force = force * (dt / this->mass);
-	this->velocity = this->velocity - force;
+	this->velocity = this->velocity + force * (dt / this->mass);
 }
 
 void Body::updatePosition(double dt)
