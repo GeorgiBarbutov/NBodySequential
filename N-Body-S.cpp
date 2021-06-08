@@ -87,7 +87,7 @@ void runAllConfigurations(int bodyCount, double maxT, double dt, double theta) {
 
 int main() 
 {
-	//10 to 10000 bodies, 10 to 10000 cycles, 2 to 0 theta
+	//10 to 10000 bodies, 10 to 10000 cycles, 2 to 0 theta - It takes forever in the last few!
 	for (int bodyCount = 10; bodyCount <= 10000; bodyCount *= 10)
 	{
 		for (int maxT = 1; maxT <= 1000; maxT *= 10)
