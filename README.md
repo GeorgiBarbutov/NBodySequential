@@ -1,2 +1,2 @@
-# NBodySequential
-N-Body Simulation with sequential Barnes-Hut algorithm
+# N-Body
+N-Body Simulation with sequential and parallel Barnes-Hut algorithm
