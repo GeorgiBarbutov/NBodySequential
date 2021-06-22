@@ -46,13 +46,6 @@ double Point::distance(Point& point)
 	return sqrt((this->x - point.getX()) * (this->x - point.getX()) + (this->y - point.getY()) * (this->y - point.getY()));
 }
 
-void Point::normalize()
-{
-	double lengthOf = this->length();
-	this->x /= lengthOf;
-	this->y /= lengthOf;
-}
-
 bool Point::operator==(const Point& point)
 {
 	return this->x == point.x && this->y == point.y;

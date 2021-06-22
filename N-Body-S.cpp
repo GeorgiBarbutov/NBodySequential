@@ -87,17 +87,21 @@ void runAllConfigurations(int bodyCount, double maxT, double dt, double theta) {
 
 int main() 
 {
-	//10 to 10000 bodies, 10 to 10000 cycles, 2 to 0 theta - It takes forever in the last few!
-	for (int bodyCount = 10; bodyCount <= 10000; bodyCount *= 10)
-	{
-		for (int maxT = 1; maxT <= 1000; maxT *= 10)
-		{
-			for (double theta = 2; theta >= 0; theta -= 0.5)
-			{
-				runAllConfigurations(bodyCount, maxT, 0.1, theta);
-			}
-		}
-	}
+	//Single test with 1000 bodies, 1000 cycles, 0.1 step and theta = 1
+	runAllConfigurations(1000, 100, 0.1, 1.0);
+
+	//Uncomment to run 80 tests!
+	////10 to 10000 bodies, 10 to 10000 cycles, 2 to 0 theta - It takes forever in the last few!
+	//for (int bodyCount = 10; bodyCount <= 10000; bodyCount *= 10)
+	//{
+	//	for (int maxT = 1; maxT <= 1000; maxT *= 10)
+	//	{
+	//		for (double theta = 2; theta >= 0; theta -= 0.5)
+	//		{
+	//			runAllConfigurations(bodyCount, maxT, 0.1, theta);
+	//		}
+	//	}
+	//}
 	
 	return 0;
 };

@@ -18,7 +18,6 @@ public:
 
 	double length();
 	double distance(Point& point);
-	void normalize();
 
 	bool operator==(const Point& point);
 	Point operator+(const Point& point);

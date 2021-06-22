@@ -274,7 +274,6 @@ Point Node::appliedForce(Body& target, Point& influence, double influenceMass, d
 {
 	Point direction = influence - target.getPoint();
 	double r = direction.length();
-	direction.normalize();
 
 	Point force = Point();
 	if (target.getPoint() == influence)
@@ -282,7 +281,7 @@ Point Node::appliedForce(Body& target, Point& influence, double influenceMass, d
 		return force;
 	}
 
-	double F = G * target.getMass() * influenceMass / (r * r);
+	double F = G * target.getMass() * influenceMass / (r * r * r);
 	force = direction * F + force;
 
 	return force;
